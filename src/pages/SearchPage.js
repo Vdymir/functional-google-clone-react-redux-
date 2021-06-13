@@ -14,6 +14,7 @@ import { selectTextString } from '../features/textSlice'
 import { useSelector } from 'react-redux'
 import API_KEY, { CONTEXT_KEY } from '../key'
 import { useFetch } from '../hooks/useFetch'
+import Result from '../components/Result'
 
 const SearchPage = () => {
 
@@ -21,8 +22,10 @@ const SearchPage = () => {
 
     const url = `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CONTEXT_KEY}&q=${textString}`;
 
-    const  state  = useFetch(url);
-    console.log(state)
+    const  {data, loading}  = useFetch(url);
+
+    
+    console.log(data)
     return (
         <>
             <div className="searchPage">
@@ -81,7 +84,21 @@ const SearchPage = () => {
                         <Avatar />
                     </div>
                 </div>
-                {  textString  }
+                {  
+                    loading ? 
+                    <div className="searchPage__spiner"></div>
+                    :
+                    <div className="searchPage__result">
+                        <p className="searchPage__resultCount">
+                            About { data?.searchInformation.formattedTotalResults } result ({data?.searchInformation?.formattedSearchTime} seconds)
+                        </p>
+                        {
+                            data.items?.map( item => (
+                                <Result key= {item.cacheId} data={item}/>
+                            ))
+                        }
+                    </div>
+                }
             </div>
         </>
     )

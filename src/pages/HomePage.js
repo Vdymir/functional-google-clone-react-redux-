@@ -7,14 +7,19 @@ import { Link } from 'react-router-dom'
 import Search from '../components/Search';
 
 const HomePage = () => {
+
+    const handleClick = () => {
+        window.open('https://github.com/Vdymir');
+    }
+
     return (
         <div className="home">
             <div className="home__header">
-                <div className="home__headerLeft">           
-                    <IconButton className="home__headerIcons">
+                <div className="home__headerLeft">                  
+                    <IconButton className="home__headerIcons" onClick={ handleClick }>
                         <GitHubIcon />
                         <p>-vdymir</p>
-                    </IconButton>         
+                    </IconButton>           
                     
                 </div>
                 <div className="home__headerRight">
